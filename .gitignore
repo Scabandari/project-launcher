@@ -147,3 +147,7 @@ dist
 # TernJS port file
 .tern-port
 */**/.tern-port
+
+# Sentry
+/self-hosted
+/onpremise
