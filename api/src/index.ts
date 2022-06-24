@@ -1,17 +1,19 @@
-import express from 'express';
+import express from "express";
+import cors from "cors";
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Well done sir, your a boss babe!');
-})
+app.use(cors({ origin: process.env.CLIENT_URL }));
 
-app.get('/err', (req, res) => {
-    throw new Error('There was some error');
-})
+app.get("/", (req, res) => {
+  res.send(`Well done sir, client: ${process.env.CLIENT_URL} `);
+});
 
- const PORT = 8080;
- app.listen(PORT, () => {
-     console.log(`The application is listening on port ${PORT}!`);
- })
+app.get("/err", (req, res) => {
+  throw new Error("There was some error");
+});
 
+const PORT = 8080;
+app.listen(PORT, () => {
+  console.log(`The application is listening on port ${PORT}!`);
+});
