@@ -17,3 +17,5 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`The application is listening on port ${PORT}!`);
 });
+
+export default app;
