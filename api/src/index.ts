@@ -13,7 +13,7 @@ app.get("/err", (req, res) => {
   throw new Error("There was some error");
 });
 
-const PORT = 8080;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`The application is listening on port ${PORT}!`);
 });

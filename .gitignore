@@ -151,3 +151,9 @@ dist
 # Sentry
 /self-hosted
 /onpremise
+
+# env files
+env/*/**
+
+# api build folder
+/api/build/**
