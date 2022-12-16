@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v1
 
       - name: Start containers
-        run: docker-compose -f "dc/docker-compose.dev.yml" -f "dc/docker-compose.test.unit.yml" up --build
+        run: docker-compose -f "dc/docker-compose.dev.yml" -f "dc/docker-compose.test.unit.yml" up --build --exit-code-from api
 
       - name: Stop containers
         # if: always()
