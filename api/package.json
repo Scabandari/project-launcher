@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm-run-all migrate-dev seed start",
-    "nodemon": "nodemon",
+    "dev": "npm-run-all migrate-dev seed nodemon",
+    "nodemon": "nodemon src/index.ts",
     "start": "ts-node src/index.ts",
     "migrate-dev": "prisma migrate dev --name commit",
     "build": "npx tsc --project ./",
