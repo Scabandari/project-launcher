@@ -7,11 +7,9 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=db_dev
+      - POSTGRES_DB=db_test
     ports:
       - "5432:5432"
-    # volumes:
-    #   - db:/var/lib/postgresql/data
   api:
     depends_on:
       - db
@@ -27,21 +25,16 @@ services:
       - ../env/api/.env.dev
     restart: always
     # command: tail -F nonExistingFile
-  client:
+  cypress:
     build:
       context: ../client
-      dockerfile: Dockerfile.dev
-    depends_on:
-      - api
+      dockerfile: Dockerfile.test
     env_file:
-      - ../env/client/.env.dev
-    ports:
-      - 3000:3000
+      - ../env/client/.env.test
     volumes:
       - ../client:/usr/app/client
       - /urs/app/client/node_modules
-    restart: always
-
-volumes:
-  db:
-    driver: local
+    # command: "tail -F nonExistingFile"
+    command: "npm run dev"
+    ports:
+      - 3000:3000

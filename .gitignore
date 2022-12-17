@@ -157,3 +157,6 @@ dist
 
 # api build folder
 /api/build/**
+
+/client/cypress/screenshots/
+/client/cypress/videos/
