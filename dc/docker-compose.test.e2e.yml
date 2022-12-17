@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=db_test
+      - POSTGRES_DB=db_test_e2e
     ports:
       - "5432:5432"
   api:
@@ -22,7 +22,7 @@ services:
       - ../api:/usr/app/api
       - /usr/app/api/node_modules
     env_file:
-      - ../env/api/.env.dev
+      - ../env/api/.env.test.e2e
     restart: always
     # command: tail -F nonExistingFile
   cypress:
@@ -30,11 +30,11 @@ services:
       context: ../client
       dockerfile: Dockerfile.test
     env_file:
-      - ../env/client/.env.test
+      - ../env/client/.env.test.e2e
     volumes:
       - ../client:/usr/app/client
       - /urs/app/client/node_modules
     # command: "tail -F nonExistingFile"
-    command: "npm run dev"
+    command: "npm run e2e:ci"
     ports:
       - 3000:3000

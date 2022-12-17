@@ -12,8 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Start containers
+      - name: Start backend containers
         run: docker-compose -f dc/docker-compose.test.unit.yml -p unit up --exit-code-from api
 
-      - name: Stop containers
+      - name: Stop backend containers
         run: docker-compose -f dc/docker-compose.test.unit.yml -p unit down --remove-orphans
+
+      - name: Start frontend containers
+        run: docker-compose -f dc/docker-compose.test.e2e.yml -p e2e up --exit-code-from cypress
+
+      - name: Stop frontend containers
+        run: docker-compose -f dc/docker-compose.test.e2e.yml -p e2e down --remove-orphans
