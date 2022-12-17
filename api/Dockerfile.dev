@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:16-bullseye-slim
 
 WORKDIR /usr/app/api
 RUN chown -R node:node /usr/app/api
