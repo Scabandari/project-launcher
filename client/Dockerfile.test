@@ -8,5 +8,6 @@ USER root
 RUN apt-get update && apt-get -y install procps
 COPY package*.json ./
 USER node
+RUN npm install -g npm@latest
 RUN npm ci
 COPY . .
