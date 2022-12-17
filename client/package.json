@@ -21,8 +21,8 @@
     "e2e": "cypress run",
     "start-server": "npm run dev",
     "test": "npm run e2e",
-    "e2e:ci": "npx start-server-and-test start-server http://localhost:3000 test",
-    "dev": "react-scripts start",
+    "e2e:ci": "start-server-and-test start-server http://localhost:3000 test",
+    "dev": "npx react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
