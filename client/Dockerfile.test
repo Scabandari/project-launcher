@@ -6,10 +6,7 @@ RUN chown -R node:node /usr/app/client
 
 USER root
 RUN apt-get update && apt-get -y install procps
-# Bundle app source & Install app dependencies
 COPY package*.json ./
-# USER root
-RUN npm install -g npm@9.2.0
 USER node
 RUN npm ci
 COPY . .
