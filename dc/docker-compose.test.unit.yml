@@ -1,6 +1,26 @@
 version: "3.8"
 
 services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db_test_unit
+    ports:
+      - "5432:5431"
   api:
-    command: npm run test
-    restart: "no"
+    depends_on:
+      - db
+    build:
+      context: ../api
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8081:8081
+    volumes:
+      - ../api:/usr/app/api
+      - /usr/app/api/node_modules
+    env_file:
+      - ../env/api/.env.test
+    command: "npm run test"
