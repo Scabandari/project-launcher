@@ -9,10 +9,13 @@ RUN npm install -g typescript cypress
 RUN apt-get update && apt-get -y install procps
 
 RUN chown -R node:node /usr/app/client
+
 USER node
 COPY package*.json ./
 # USER node
 RUN npm ci
 # RUN npm install
 COPY . .
-# CMD ["npm", "run", "e2e:ci"]
+USER root
+RUN chmod -R 777 /usr/app/client/cypress
+USER node

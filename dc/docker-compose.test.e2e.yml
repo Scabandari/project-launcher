@@ -31,9 +31,9 @@ services:
       dockerfile: Dockerfile.test
     env_file:
       - ../env/client/.env.test.e2e
-    volumes:
-      - ../client:/usr/app/client
-      - /urs/app/client/node_modules
+    # volumes:
+    #   - ../client:/usr/app/client
+    #   - /urs/app/client/node_modules
     # command: "tail -F nonExistingFile"
     command: "npm run e2e:ci"
     ports:
