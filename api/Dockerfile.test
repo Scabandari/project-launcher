@@ -1,0 +1,11 @@
+FROM node:16-bullseye-slim
+
+WORKDIR /usr/app/api
+RUN chown -R node:node /usr/app/api
+USER node
+
+COPY package*.json ./
+RUN npm ci
+COPY . .
+
+CMD npm run dev

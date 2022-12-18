@@ -15,7 +15,7 @@ services:
       - db
     build:
       context: ../api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.test
     ports:
       - 8080:8080
     volumes:
@@ -24,17 +24,12 @@ services:
     env_file:
       - ../env/api/.env.test.e2e
     restart: always
-    # command: tail -F nonExistingFile
   cypress:
     build:
       context: ../client
       dockerfile: Dockerfile.test
     env_file:
       - ../env/client/.env.test.e2e
-    # volumes:
-    #   - ../client:/usr/app/client
-    #   - /urs/app/client/node_modules
-    # command: "tail -F nonExistingFile"
     command: "npm run e2e:ci"
     ports:
       - 3000:3000
