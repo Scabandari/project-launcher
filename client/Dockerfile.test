@@ -2,11 +2,16 @@ FROM cypress/base:16.14.0-slim
 
 # Create app directory
 WORKDIR /usr/app/client
-RUN chown -R node:node /usr/app/client
-USER node
 
-# Bundle app source & Install app dependencies
+USER root
+RUN apt-get update && apt-get -y install procps
+
+RUN chown -R node:node /usr/app/client
+
+USER node
 COPY package*.json ./
 RUN npm ci
 COPY . .
-
+USER root
+RUN chmod -R 777 /usr/app/client/cypress
+USER node
