@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db_test_unit
+    ports:
+      - '5432:5431'
+  api:
+    depends_on:
+      - db
+    build:
+      context: ../api
+      dockerfile: Dockerfile.test
+    ports:
+      - 8081:8081
+    env_file:
+      - ../env/api/.env.test
+    volumes:
+      - ../api:/usr/app/api
+      - /usr/app/api/node_modules
+    command: 'npm run test'
+    # command: 'tail -F nonExistingFile'

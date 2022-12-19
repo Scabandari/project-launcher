@@ -8,6 +8,7 @@ const url = process.env.REACT_APP_API_URL;
 
 function App() {
   const [title, setTitle] = useState<string>("Well done sir");
+
   useEffect(() => {
     const fetchTitle = async () => {
       try {
