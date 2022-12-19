@@ -1,10 +1,12 @@
-import prisma from "../prisma";
-import { user1, post1, post2, post3, profile1 } from "../stubs";
+import prisma from '../client';
+import { user1 } from './data/user';
+import { post1, post2, post3 } from './data/post';
+import { profile1 } from './data/profile';
 
 const seed = async () => {
   const user = await prisma.user.create({ data: user1 });
   await prisma.profile.create({
-    data: { ...profile1, userId: user.id, bio: "Profile 1 bio" },
+    data: { ...profile1, userId: user.id, bio: 'Profile 1 bio' },
   });
   await prisma.post.createMany({
     data: [
@@ -17,7 +19,7 @@ const seed = async () => {
 
 const main = async () => {
   try {
-    console.log("Running seed.ts");
+    console.log('Running seed.ts');
     await seed();
   } catch (e) {
     console.error(e);

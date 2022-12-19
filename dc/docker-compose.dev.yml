@@ -20,6 +20,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - 8080:8080
+      - 9229:9229
     volumes:
       - ../api:/usr/app/api
       - /usr/app/api/node_modules
