@@ -1,34 +1,47 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from 'react';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import styled from '@emotion/styled';
 
-import logo from "./logo.svg";
-import "./App.css";
+import { HomePage } from './pages';
+import { Header } from './components';
+import { borderBox, fitPageContentMediaQuery } from './styles/constants';
 
 const url = process.env.REACT_APP_API_URL;
 
-function App() {
-  const [title, setTitle] = useState<string>("Well done sir");
+const Help = () => <h1>Help Center</h1>;
+const About = () => <h1>About page</h1>;
+const Logout = () => <h1>You've been logged out</h1>;
 
-  useEffect(() => {
-    const fetchTitle = async () => {
-      try {
-        const response = await axios.get(`${url}`);
-        setTitle(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchTitle();
-  }, []);
+const PageWrap = styled.div`
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+`;
 
+const PageContent = styled.div`
+  ${borderBox}
+  width: 100%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  ${fitPageContentMediaQuery}
+`;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{title}</p>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <PageWrap id='page-wrap'>
+        <PageContent>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/logout' element={<Logout />} />
+            <Route path='/help' element={<Help />} />
+          </Routes>
+        </PageContent>
+      </PageWrap>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

@@ -27,7 +27,6 @@ services:
     env_file:
       - ../env/api/.env.dev
     restart: always
-    # command: tail -F nonExistingFile
   client:
     build:
       context: ../client
@@ -42,7 +41,3 @@ services:
       - ../client:/usr/app/client
       - /urs/app/client/node_modules
     restart: always
-
-volumes:
-  db:
-    driver: local
