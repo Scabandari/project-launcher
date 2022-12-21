@@ -2,7 +2,6 @@ const HomePage = () => {
   return (
     <div data-testid='home-page'>
       <h2>This is a full stack project launcher (WIP)</h2>
-      <h3>Title changed</h3>
       <p>
         The aim is to deliver a jumping off point for a production grade app
         complete with:
