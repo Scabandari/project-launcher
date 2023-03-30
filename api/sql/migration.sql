@@ -1,24 +1,24 @@
-CREATE TABLE user_type (
+CREATE TABLE user_types (
   id SERIAL PRIMARY KEY,
   user_type_name TEXT NOT NULL UNIQUE
 );
 
-INSERT INTO user_type (user_type_name) VALUES ('Admin'), ('Customer'), ('Guest');
+INSERT INTO user_types (user_type_name) VALUES ('admin'), ('customer'), ('guest');
 
-CREATE TABLE "user" (
+CREATE TABLE users (
   "id" SERIAL PRIMARY KEY,
-	"user_type_id" INTEGER NOT NULL,
-  "email" VARCHAR(100) NOT NULL UNIQUE,
+  "user_type_id" INTEGER NOT NULL,
+  "email" VARCHAR(100) UNIQUE NULL,
   "username" VARCHAR(50) NOT NULL UNIQUE,
   "password" VARCHAR(50) NOT NULL,
   "created_at" TIMESTAMP(3) NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMP(3) NOT NULL DEFAULT NOW(),
 
 	CONSTRAINT "user_user_type_id_fkey" FOREIGN KEY ("user_type_id") 
-			REFERENCES "user_type"("id") ON DELETE CASCADE
+			REFERENCES "user_types"("id") ON DELETE CASCADE
 );
 
-CREATE TABLE "profile" (
+CREATE TABLE "profiles" (
   "id" SERIAL PRIMARY KEY,
   "user_id" INT NOT NULL,
   "bio" TEXT,
@@ -26,10 +26,10 @@ CREATE TABLE "profile" (
   "updated_at" TIMESTAMP(3) NOT NULL DEFAULT NOW(),
 
   CONSTRAINT "profile_user_id_fkey" FOREIGN KEY ("user_id") 
-      REFERENCES "user"("id") ON DELETE CASCADE
+      REFERENCES "users"("id") ON DELETE CASCADE
 );
 
-CREATE TABLE "post" (
+CREATE TABLE "posts" (
   "id" SERIAL PRIMARY KEY,
   "author_id" INT NOT NULL,
   "title" VARCHAR(255) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE "post" (
   "updated_at" TIMESTAMP(3) NOT NULL DEFAULT NOW(),
 
   CONSTRAINT "post_author_id_fkey" FOREIGN KEY ("author_id") 
-      REFERENCES "profile"("id") ON DELETE CASCADE
+      REFERENCES "users"("id") ON DELETE CASCADE
 );
 
 CREATE OR REPLACE FUNCTION update_updatedat()
@@ -63,6 +63,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- This one has to be kept and run everytime we add a new table
 DO $$
 DECLARE
   name_of_table text;
@@ -76,48 +77,46 @@ BEGIN
 END$$;
 
 
-INSERT INTO "user" (user_type_id, email, username, password) VALUES
+INSERT INTO "users" (user_type_id, email, username, password) VALUES
 	(
-		(SELECT id FROM user_type WHERE user_type_name = 'Admin'),
+		(SELECT id FROM user_types WHERE user_type_name = 'admin'),
 		'ryan3nichols@gmail.com', 'god', 'password'
 	),
 	(
-		(SELECT id FROM user_type WHERE user_type_name = 'Customer'),
+		(SELECT id FROM user_types WHERE user_type_name = 'customer'),
 		'cust1@email.com', 'customer1', 'password'
 	),
 	(
-		(SELECT id FROM user_type WHERE user_type_name = 'Customer'),
+		(SELECT id FROM user_types WHERE user_type_name = 'customer'),
 		'cust2@email.com', 'customer2', 'password'
 	),
 	(
-		(SELECT id FROM user_type WHERE user_type_name = 'Customer'),
+		(SELECT id FROM user_types WHERE user_type_name = 'customer'),
 		'cust3@email.com', 'customer3', 'password'
 	)
 ;
 
 
-INSERT INTO "profile" (user_id, bio) VALUES
+INSERT INTO "profiles" (user_id, bio) VALUES
 	(
-		(SELECT id FROM "user" WHERE username = 'customer1'),
+		(SELECT id FROM "users" WHERE username = 'customer1'),
     'Bio for customer1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
 	),
 	(
-		(SELECT id FROM "user" WHERE username = 'customer2'),
+		(SELECT id FROM "users" WHERE username = 'customer2'),
     'Bio for customer2 Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
 	),
 	(
-		(SELECT id FROM "user" WHERE username = 'customer3'),
+		(SELECT id FROM "users" WHERE username = 'customer3'),
     'Bio for customer3 Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
 	)
 ;
 
 
-INSERT INTO "post" (author_id, title, content, published) VALUES
+INSERT INTO "posts" (author_id, title, content, published) VALUES
 	(
 		(
-			SELECT id FROM "profile" WHERE user_id = (
-				SELECT id FROM "user" WHERE username = 'customer1'
-			)
+			SELECT id FROM "users" WHERE username = 'customer1'
 		),
 		'Post 1',
 		'customer1j''s first post Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -125,9 +124,7 @@ INSERT INTO "post" (author_id, title, content, published) VALUES
 	),
 	(
 		(
-			SELECT id FROM "profile" WHERE user_id = (
-				SELECT id FROM "user" WHERE username = 'customer1'
-			)
+			SELECT id FROM "users" WHERE username = 'customer1'
 		),
 		'Post 1',
 		'customer2''s first post Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -135,9 +132,7 @@ INSERT INTO "post" (author_id, title, content, published) VALUES
 	),
 	(
 		(
-			SELECT id FROM "profile" WHERE user_id = (
-				SELECT id FROM "user" WHERE username = 'customer1'
-			)
+			SELECT id FROM "users" WHERE username = 'customer1'
 		),
 		'Post 3',
 		'customer3''s second ipsum dolor sit amet, consectetur adipiscing elit.',

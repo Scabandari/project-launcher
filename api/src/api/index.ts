@@ -1,12 +1,7 @@
-import express from "express";
-import users from "./users";
+import express from 'express';
+import users from './routers/userRouter';
 
 const router = express.Router();
+router.use('/users', users);
 
-const routes = () => {
-  router.use("/api/users", users);
-
-  return router;
-};
-
-export default routes;
+export default router;
