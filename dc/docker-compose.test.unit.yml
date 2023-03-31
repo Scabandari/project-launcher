@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   db:
@@ -9,7 +9,9 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=db_test_unit
     ports:
-      - "5432:5431"
+      - '5432:5430'
+    volumes:
+      - ../api/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
   api:
     depends_on:
       - db
@@ -17,7 +19,14 @@ services:
       context: ../api
       dockerfile: Dockerfile.test
     ports:
-      - 8081:8081
+      - 8080:8080
+    volumes:
+      - ../api:/usr/app/api
+      - /usr/app/api/node_modules
     env_file:
-      - ../env/api/.env.test
-    command: "npm run test"
+      - ../env/api/.env.test.unit
+    environment:
+      - DB_NAME=db_test_unit
+      - DB_Port=5430
+      - DB_HOST=db
+    command: npm run test

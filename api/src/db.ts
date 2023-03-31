@@ -1,9 +1,15 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres://postgres:postgres@db:5432/db_dev', {
-  underscored: true,
-  underscoredAll: true,
-});
+const dbName = process.env.DB_NAME || 'db_dev';
+const dbPort = process.env.DB_PORT || 5432;
+const dbHost = process.env.DB_HOST || 'localhost';
+const sequelize = new Sequelize(
+  `postgres://postgres:postgres@${dbHost}:${dbPort}/${dbName}`,
+  {
+    underscored: true,
+    underscoredAll: true,
+  }
+);
 (async () => {
   try {
     await sequelize.authenticate();

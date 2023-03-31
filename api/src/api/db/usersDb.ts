@@ -2,19 +2,22 @@ import User from '../models/userModel';
 
 const getAll = async () => await User.findAll();
 
-const create = async (user: any) => {
-  // const newUser =
+const getById = async (id: number) => await User.findByPk(id);
 
-  // typeof user.userTypeId === 'string'
-  // ? { ...user, userTypeId: parseInt(user.userTypeId) }
-  // : user;
-  // let newUser;
-  // if (typeof user.userTypeId === 'string') {
-  //   newUser = { ...user, userTypeId: parseInt(user.userTypeId) };
-  // } else {
-  //   newUser = user;
-  // }
-  return await User.create(user);
-};
+const getByUsername = async (username: string) =>
+  await User.findOne({
+    where: {
+      username,
+    },
+  });
 
-export { getAll, create };
+const create = async (user: any) => await User.create(user);
+
+const remove = async (id: number) =>
+  await User.destroy({
+    where: {
+      id,
+    },
+  });
+
+export { getAll, getById, getByUsername, create, remove };
