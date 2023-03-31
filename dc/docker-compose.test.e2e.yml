@@ -27,7 +27,7 @@ services:
       - DB_HOST=db
       - DB_NAME=db_test_e2e
     command: 'npm run dev'
-  client:
+  cypress:
     build:
       context: ../client/react
       dockerfile: Dockerfile.test
