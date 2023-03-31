@@ -2,14 +2,13 @@ import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-import { HomePage } from './pages';
+import { HomePage, AboutPage } from './pages';
 import { Header } from './components';
 import { borderBox, fitPageContentMediaQuery } from './styles/constants';
 
 const url = process.env.REACT_APP_API_URL;
 
 const Help = () => <h1>Help Center</h1>;
-const About = () => <h1>About page</h1>;
 const Logout = () => <h1>You've been logged out</h1>;
 
 const PageWrap = styled.div`
@@ -34,7 +33,7 @@ const App = () => {
         <PageContent>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/about' element={<About />} />
+            <Route path='/about' element={<AboutPage />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/help' element={<Help />} />
           </Routes>

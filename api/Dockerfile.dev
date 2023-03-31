@@ -10,5 +10,4 @@ RUN cd /usr/app/api && npm install
 
 COPY . .
 
-
 CMD npm run dev

@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=db_dev
+      - POSTGRES_DB=db_test_e2e
     ports:
       - '5432:5432'
     volumes:
@@ -17,31 +17,27 @@ services:
       - db
     build:
       context: ../api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.test
     ports:
-      - 8080:8080
-      - 9229:9229
-    volumes:
-      - ../api:/usr/app/api
-      - /usr/app/api/node_modules
+      - 8080:8082
     env_file:
-      - ../env/api/.env.dev
+      - ../env/api/.env.test.e2e
     environment:
-      - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=db_dev
-    restart: always
+      - DB_HOST=db
+      - DB_NAME=db_test_e2e
+    command: 'npm run dev'
   client:
     build:
       context: ../client/react
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.test
     depends_on:
       - api
     env_file:
-      - ../env/client/.env.dev
+      - ../env/client/.env.test.e2e
     ports:
       - 3000:3000
     volumes:
       - ../client/react:/usr/app/client/react
       - /urs/app/client/react/node_modules
-    restart: always
+    command: 'npm run e2e:ci'
