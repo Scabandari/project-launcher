@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   db:
@@ -9,9 +9,9 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=db_dev
     ports:
-      - "5432:5432"
-    # volumes:
-    #   - db:/var/lib/postgresql/data
+      - '5432:5432'
+    volumes:
+      - ../api/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
   api:
     depends_on:
       - db
@@ -26,10 +26,14 @@ services:
       - /usr/app/api/node_modules
     env_file:
       - ../env/api/.env.dev
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=db_dev
     restart: always
   client:
     build:
-      context: ../client
+      context: ../client/react
       dockerfile: Dockerfile.dev
     depends_on:
       - api
@@ -38,6 +42,6 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ../client:/usr/app/client
-      - /urs/app/client/node_modules
+      - ../client/react:/usr/app/client/react
+      - /urs/app/client/react/node_modules
     restart: always

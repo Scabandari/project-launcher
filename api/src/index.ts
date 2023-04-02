@@ -1,10 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import createRoutes from './api';
+import bodyParser from 'body-parser';
 
-const routes = createRoutes();
+import routes from './api';
 
 const app = express();
+// Add middleware to parse incoming request bodies
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cors({ origin: process.env.CLIENT_URL }));
 
 app.get('/', (req, res) => {
@@ -17,7 +21,7 @@ app.get('/err', (req, res) => {
 
 app.use(routes);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () => {
   console.log(`The application is listening on port ${PORT}!`);
 });

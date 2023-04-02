@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   db:
@@ -9,7 +9,9 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=db_test_e2e
     ports:
-      - "5432:5432"
+      - '5432:5432'
+    volumes:
+      - ../api/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
   api:
     depends_on:
       - db
@@ -17,19 +19,25 @@ services:
       context: ../api
       dockerfile: Dockerfile.test
     ports:
-      - 8080:8080
-    volumes:
-      - ../api:/usr/app/api
-      - /usr/app/api/node_modules
+      - 8080:8082
     env_file:
       - ../env/api/.env.test.e2e
-    restart: always
+    environment:
+      - DB_PORT=5432
+      - DB_HOST=db
+      - DB_NAME=db_test_e2e
+    command: 'npm run dev'
   cypress:
     build:
-      context: ../client
+      context: ../client/react
       dockerfile: Dockerfile.test
+    depends_on:
+      - api
     env_file:
       - ../env/client/.env.test.e2e
-    command: "npm run e2e:ci"
     ports:
       - 3000:3000
+    volumes:
+      - ../client/react:/usr/app/client/react
+      - /urs/app/client/react/node_modules
+    command: 'npm run e2e:ci'
