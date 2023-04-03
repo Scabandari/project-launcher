@@ -3,7 +3,9 @@ FROM node:alpine
 WORKDIR /usr/app/client/react
 
 COPY package*.json ./
-RUN npm install
+# Todo which one works?
+# RUN npm install
+# RUN cd /usr/app/client/react && npm install
 COPY ./ ./ 
 
 CMD ["npm", "run", "dev"]
