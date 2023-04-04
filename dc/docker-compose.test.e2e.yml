@@ -26,6 +26,7 @@ services:
       - DB_PORT=5432
       - DB_HOST=db
       - DB_NAME=db_test_e2e
+      - JWT_SECRET=${JWT_SECRET}
     command: 'npm run dev'
   cypress:
     build:

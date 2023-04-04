@@ -15,10 +15,10 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: '16.x'
 
       - name: Start backend containers
-        run: docker-compose -f dc/docker-compose.test.unit.yml -p unit up --build --exit-code-from api
+        run: JWT_SECRET=ajkjwlciyl docker-compose -f dc/docker-compose.test.unit.yml -p unit up --build --exit-code-from api
 
       - name: Stop backend containers
         run: docker-compose -f dc/docker-compose.test.unit.yml -p unit down --remove-orphans

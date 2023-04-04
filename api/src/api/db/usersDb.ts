@@ -1,23 +1,73 @@
-import User from '../models/userModel';
+import UserModel from '../models/userModel';
+import { User } from '../types/userTypes';
 
-const getAll = async () => await User.findAll();
+const getAll = async () =>
+  (await UserModel.findAll()).map(({ password, ...user }: User) => user);
 
-const getById = async (id: number) => await User.findByPk(id);
+const getById = async (id: number) => {
+  const { password, ...user } = await UserModel.findByPk(id);
 
-const getByUsername = async (username: string) =>
-  await User.findOne({
+  return user;
+};
+
+const getByUsername = async (username: string) => {
+  const { password, ...user } = await UserModel.findOne({
     where: {
       username,
     },
   });
 
-const create = async (user: any) => await User.create(user);
+  return user;
+};
+
+const create = async (userToCreate: User) => {
+  const { dataValues } = await UserModel.create(userToCreate);
+  const { password, ...user } = dataValues;
+
+  return user;
+};
+
+const update = async (id: number, userToUpdate: User) => {
+  const [numberOfAffectedRows, [updatedUser]] = await UserModel.update(
+    userToUpdate,
+    {
+      where: {
+        id,
+      },
+      returning: true,
+    }
+  );
+  if (!numberOfAffectedRows) throw 'User not updated';
+  const { password, ...user } = updatedUser;
+
+  return user;
+};
 
 const remove = async (id: number) =>
-  await User.destroy({
+  await UserModel.destroy({
     where: {
       id,
     },
   });
 
-export { getAll, getById, getByUsername, create, remove };
+const getHashedPassword = async (username: string) => {
+  const user = await UserModel.findOne({
+    where: {
+      username,
+    },
+  });
+  if (!user) throw 'User not found';
+  const { password } = user;
+
+  return password;
+};
+
+export {
+  getHashedPassword,
+  getAll,
+  getById,
+  getByUsername,
+  create,
+  update,
+  remove,
+};
