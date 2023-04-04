@@ -29,4 +29,6 @@ services:
       - DB_NAME=db_test_unit
       - DB_Port=5430
       - DB_HOST=db
-    command: npm run test
+      - JWT_SECRET=${JWT_SECRET}
+
+    command: sh -c "./scripts/shell/wait-for-it.sh db:5430; npm run seed && npm run test"

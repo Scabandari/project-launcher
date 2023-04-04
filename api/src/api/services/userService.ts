@@ -1,4 +1,6 @@
 import * as dbUsers from '../db/usersDb';
+import * as authUtils from '../../utils/authUtils';
+import { User } from '../types/userTypes';
 
 const getById = async (id: number) => {
   const user = await dbUsers.getById(id);
@@ -23,11 +25,31 @@ const getAll = async () => {
   return users;
 };
 
-const create = async (user: any) => {
-  const newUser = await dbUsers.create(user);
+const create = async (user: User) => {
+  const hashedPassword = await authUtils.createPasswordHash(user.password!);
+  const newUser = await dbUsers.create({ ...user, password: hashedPassword });
   if (!newUser) throw 'User not created';
 
   return newUser;
+};
+
+const update = async (id: number, user: User) => {
+  const updatedUser = await dbUsers.update(id, user);
+  if (!updatedUser) throw 'User not updated';
+
+  return updatedUser;
+};
+
+const login = async (username: string, password: string) => {
+  const hashedPassword = await dbUsers.getHashedPassword(username);
+  const passwordsMatch = await authUtils.comparePasswords(
+    password,
+    hashedPassword
+  );
+  if (!passwordsMatch) throw 'Passwords do not match';
+
+  const token = authUtils.createToken(username);
+  return token;
 };
 
 const remove = async (userId: number) => {
@@ -37,4 +59,4 @@ const remove = async (userId: number) => {
   return numberOfUsersDeleted;
 };
 
-export { getAll, create, getById, getByUsername, remove };
+export { update, getAll, create, getById, getByUsername, remove, login };

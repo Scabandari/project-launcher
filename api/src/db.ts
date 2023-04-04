@@ -8,6 +8,12 @@ const sequelize = new Sequelize(
   {
     underscored: true,
     underscoredAll: true,
+    logging: (msg: { level: string; message: any }) => {
+      if (msg.level === 'error') {
+        console.error(msg.message);
+      }
+    },
+    query: { raw: true },
   }
 );
 (async () => {

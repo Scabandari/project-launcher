@@ -5,7 +5,7 @@ RUN chown -R node:node /usr/app/api
 USER node
 
 COPY package*.json ./
-RUN cd /usr/app/api && npm ci
+RUN npm ci
 
 COPY . .
 
