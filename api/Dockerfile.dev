@@ -6,7 +6,7 @@ RUN chown -R node:node /usr/app/api
 RUN npm install -g npm@latest
 RUN npm install -g npm-run-all
 COPY package*.json ./
-RUN cd /usr/app/api && npm install
+RUN npm install
 
 COPY . .
 

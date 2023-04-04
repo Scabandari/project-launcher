@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-import UserType from '../user_types/userTypesModel';
+import UserType from './userTypeModel';
 import db from '../../db';
 
 const User = db.define(
@@ -48,6 +48,7 @@ const User = db.define(
     tableName: 'users',
     timestamps: false,
     underscored: true,
+    raw: true,
   }
 );
 

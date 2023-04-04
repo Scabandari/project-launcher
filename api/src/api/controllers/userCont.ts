@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import * as serviceUsers from '../services/userService';
 
@@ -44,6 +44,17 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
+const update = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const user = await serviceUsers.update(parsedId, req.body);
+    res.status(200).send({ user });
+  } catch (err) {
+    console.log('err', err);
+  }
+};
+
 const remove = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -55,4 +66,26 @@ const remove = async (req: Request, res: Response) => {
   }
 };
 
-export default { getAll, getById, getByUsername, create, remove };
+const login = async (req: Request, res: Response) => {
+  try {
+    const { username, password } = req.body;
+    const { id } = req.params;
+    const user = await serviceUsers.getById(Number(id));
+    if (user.username !== username) throw new Error('Invalid username');
+    const token = await serviceUsers.login(username, password);
+
+    res.status(200).send({ user, token });
+  } catch (err) {
+    console.log('err', err);
+  }
+};
+
+export default {
+  update,
+  getAll,
+  getById,
+  getByUsername,
+  create,
+  remove,
+  login,
+};
