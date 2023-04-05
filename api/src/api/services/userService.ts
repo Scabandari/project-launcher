@@ -16,6 +16,13 @@ const getByUsername = async (username: string) => {
   return user;
 };
 
+const getByEmail = async (email: string) => {
+  const user = await dbUsers.getByEmail(email);
+  if (!user) throw 'User not found';
+
+  return user;
+};
+
 const getAll = async () => {
   const users = await dbUsers.getAll();
   if (!users) {
@@ -59,4 +66,13 @@ const remove = async (userId: number) => {
   return numberOfUsersDeleted;
 };
 
-export { update, getAll, create, getById, getByUsername, remove, login };
+export {
+  update,
+  getAll,
+  create,
+  getById,
+  getByEmail,
+  getByUsername,
+  remove,
+  login,
+};

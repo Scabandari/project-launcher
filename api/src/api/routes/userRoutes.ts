@@ -10,7 +10,7 @@ router.delete('/:id', [], Users.remove);
 router.patch('/:id', [], Users.update);
 
 // auth
-router.post('/:id/login', [], Users.login);
+router.post('/login', [], Users.login);
 router.post('/register', [], Users.create);
 
 export default router;

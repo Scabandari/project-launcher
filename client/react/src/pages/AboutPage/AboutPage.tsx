@@ -15,26 +15,28 @@ const Flex = styled.div`
 `;
 
 const bulletPoints = [
-  { phrase: 'Both token and session based authentication', checkMark: false },
-  { phrase: 'PostgreSQL database + Sequelize ORM', checkMark: true },
-  { phrase: 'Node.js + Typescript + Express backend', checkMark: true },
-  { phrase: 'React + Typescript', checkMark: true },
-  { phrase: 'Redux + Sagas for frontend state management', checkMark: false },
-  {
-    phrase: 'Mocha for testing Express routes with examples',
-    checkMark: true,
-  },
-  {
-    phrase: 'Cypress for testing frontend pages with examples',
-    checkMark: true,
-  },
   {
     phrase: 'Fully containerized and hosted on Google Cloud Platform',
     checkMark: true,
   },
   {
     phrase:
-      'ACI/CD ready using Github Actions to run tests, build images and deploy',
+      'A CI/CD pipeline using Github Actions & Google Cloud Run to deploy to production',
+    checkMark: true,
+  },
+  { phrase: 'PostgreSQL database + Sequelize ORM', checkMark: true },
+  { phrase: 'Token based authentication', checkMark: true },
+  { phrase: 'Session based authentication', checkMark: false },
+  { phrase: 'Node.js + Typescript + Express backend', checkMark: true },
+  { phrase: 'React + Typescript', checkMark: true },
+  { phrase: 'Redux frontend state management', checkMark: true },
+  { phrase: 'Redux Sagas for side effects', checkMark: false },
+  {
+    phrase: 'Mocha for testing Express routes with examples',
+    checkMark: true,
+  },
+  {
+    phrase: 'Cypress for testing frontend pages with examples',
     checkMark: true,
   },
   {
