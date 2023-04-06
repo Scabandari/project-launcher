@@ -9,6 +9,7 @@ const connectionString = urlConnectionString
   ? urlConnectionString
   : `postgres://postgres:postgres@${dbHost}:${dbPort}/${dbName}`;
 const sequelize = new Sequelize(connectionString, {
+  dialect: 'postgres',
   underscored: true,
   underscoredAll: true,
   logging: (msg: { level: string; message: any }) => {
@@ -18,6 +19,7 @@ const sequelize = new Sequelize(connectionString, {
   },
   query: { raw: true },
 });
+
 (async () => {
   try {
     await sequelize.authenticate();
