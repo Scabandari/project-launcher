@@ -11,6 +11,7 @@ router.patch('/:id', [], Users.update);
 
 // auth
 router.post('/login', [], Users.login);
-router.post('/register', [], Users.create);
+router.post('/login/guest', [], Users.loginGuest);
+router.post('/register', [], Users.register);
 
 export default router;

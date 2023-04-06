@@ -1,5 +1,6 @@
 import { FaCheck } from 'react-icons/fa';
 import styled from '@emotion/styled';
+import useProtectedPage from 'src/hooks/useProtectedPage';
 
 const StyledListItem = styled.li`
   height: 2rem;
@@ -30,14 +31,14 @@ const bulletPoints = [
   { phrase: 'Node.js + Typescript + Express backend', checkMark: true },
   { phrase: 'React + Typescript', checkMark: true },
   { phrase: 'Redux frontend state management', checkMark: true },
-  { phrase: 'Redux Sagas for side effects', checkMark: false },
+  { phrase: 'Redux Sagas for side effects', checkMark: true },
   {
     phrase: 'Mocha for testing Express routes with examples',
     checkMark: true,
   },
   {
     phrase: 'Cypress for testing frontend pages with examples',
-    checkMark: true,
+    checkMark: false,
   },
   {
     phrase: 'Dev deployments and testing done through docker-compose',
@@ -50,9 +51,17 @@ const bulletPoints = [
 ];
 
 const AboutPage = () => {
+  useProtectedPage();
+
   return (
     <div data-testid='about-page'>
-      <h2>This is a full stack project launcher (WIP)</h2>
+      <h2>
+        This is a full stack{' '}
+        <a href='https://github.com/Scabandari/project-launcher'>
+          project launcher
+        </a>{' '}
+        (WIP)
+      </h2>
       <p>
         The aim is to deliver a starting point for a production grade app that
         can be forked into other projects with:

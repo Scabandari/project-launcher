@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 
-import db from '../db';
-import User from '../api/users/userModel'; // import the User model
+import db from '../../db';
+import User from './userModel'; // import the User model
 
 const Profile = db.define(
   'profile',
@@ -11,6 +11,11 @@ const Profile = db.define(
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'user_id',
     },
     bio: {
       type: DataTypes.TEXT,
@@ -27,6 +32,7 @@ const Profile = db.define(
     },
   },
   {
+    tableName: 'profiles',
     underscored: true,
     raw: true,
   }

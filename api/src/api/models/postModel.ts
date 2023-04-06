@@ -32,6 +32,7 @@ const Post = db.define(
     },
   },
   {
+    tableName: 'posts',
     underscored: true,
     raw: true,
   }
@@ -41,4 +42,4 @@ const Post = db.define(
 Post.belongsTo(User, { foreignKey: 'user_id' });
 User.hasMany(Post, { foreignKey: 'user_id' });
 
-module.exports = Post;
+export default Post;

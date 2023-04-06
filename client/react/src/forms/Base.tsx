@@ -5,6 +5,15 @@ interface BaseProps {
   children: React.ReactNode;
 }
 
+export const FlexBetweenTitleRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const AlignParagraphFlexStart = styled.p`
+  align-self: flex-start;
+`;
+
 const StyledPaper = styled(Paper)`
   border: 1px solid #ccc;
   padding: 1rem;

@@ -11,7 +11,10 @@ const getById = async (id: number) => {
   return user;
 };
 
-const getByEmail = async (email: string) => {
+const getByEmail = async (
+  email: string,
+  throwError = true
+): Promise<User | null> => {
   try {
     const { password, ...user } = await UserModel.findOne({
       where: {
@@ -21,18 +24,31 @@ const getByEmail = async (email: string) => {
 
     return user;
   } catch (err) {
-    throw new ErrorBadRequest('email', email, 'User not found');
+    if (throwError) {
+      throw new ErrorBadRequest('email', email, 'User not found');
+    }
+    return null;
   }
 };
 
-const getByUsername = async (username: string) => {
-  const { password, ...user } = await UserModel.findOne({
-    where: {
-      username,
-    },
-  });
+const getByUsername = async (
+  username: string,
+  throwError = true
+): Promise<User | null> => {
+  try {
+    const { password, ...user } = await UserModel.findOne({
+      where: {
+        username,
+      },
+    });
 
-  return user;
+    return user;
+  } catch (err) {
+    if (throwError) {
+      throw new ErrorBadRequest('username', username, 'User not found');
+    }
+    return null;
+  }
 };
 
 const create = async (userToCreate: User) => {

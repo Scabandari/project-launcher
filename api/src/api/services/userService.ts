@@ -2,6 +2,17 @@ import * as dbUsers from '../db/usersDb';
 import * as authUtils from '../../utils/authUtils';
 import { User } from '../types/userTypes';
 
+const getGuestUser = () => {
+  const guestUser = {
+    id: 0,
+    username: 'guest',
+    email: 'guest@email.com',
+    userTypeId: 2,
+  };
+
+  return guestUser;
+};
+
 const getById = async (id: number) => {
   const user = await dbUsers.getById(id);
   if (!user) throw 'User not found';
@@ -21,6 +32,12 @@ const getByEmail = async (email: string) => {
   if (!user) throw 'User not found';
 
   return user;
+};
+
+const isUserExists = async (email: string, username: string) => {
+  const userByEmail = await dbUsers.getByEmail(email, false);
+  const userByUsername = await dbUsers.getByUsername(username, false);
+  return !!userByEmail || !!userByUsername;
 };
 
 const getAll = async () => {
@@ -69,10 +86,12 @@ const remove = async (userId: number) => {
 export {
   update,
   getAll,
+  getGuestUser,
   create,
   getById,
   getByEmail,
   getByUsername,
   remove,
   login,
+  isUserExists,
 };

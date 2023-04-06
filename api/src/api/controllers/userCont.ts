@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 
+import { ErrorBadRequest } from '../../utils/error';
 import * as serviceUsers from '../services/userService';
+import * as serviceUserTypes from '../services/userTypeService';
+import * as authUtils from '../../utils/authUtils';
 
 const getById = async (req: Request, res: Response) => {
   let user;
@@ -35,12 +38,33 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
+// Admins create users
 const create = async (req: Request, res: Response) => {
   try {
     const user = await serviceUsers.create(req.body);
     res.status(200).send({ user });
   } catch (err) {
     console.log('err', err);
+  }
+};
+
+// Customer registration
+const register = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, username } = req.body;
+    const isUserExists = await serviceUsers.isUserExists(email, username);
+    if (isUserExists)
+      throw new ErrorBadRequest(
+        'email/username',
+        { email, username },
+        'User already exists'
+      );
+
+    const userTypeId = await serviceUserTypes.getUserTypeId('customer');
+    const user = await serviceUsers.create({ ...req.body, userTypeId });
+    res.status(200).send({ user });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -78,12 +102,25 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const loginGuest = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = authUtils.createToken('guest');
+    const user = serviceUsers.getGuestUser();
+    res.status(200).send({ user, token });
+  } catch (err) {
+    next(err);
+    console.log('err', err);
+  }
+};
+
 export default {
   update,
   getAll,
   getById,
   getByUsername,
   create,
+  register,
   remove,
   login,
+  loginGuest,
 };
