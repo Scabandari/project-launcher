@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 
-// import Users from './userModel';
 import db from '../../db';
 
 const UserType = db.define(
@@ -25,7 +24,5 @@ const UserType = db.define(
     raw: true,
   }
 );
-
-// UserType.hasMany(Users, { foreignKey: 'user_type_id' });
 
 export default UserType;

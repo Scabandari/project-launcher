@@ -107,15 +107,15 @@ describe('user routes', async () => {
     });
   });
 
-  describe('POST api/users/{id}/login', async () => {
+  describe('POST api/users/login', async () => {
     it('should login a user', async () => {
       const allUsersResponse = await chai.request(app).get('/users');
       const { users } = allUsersResponse.body;
       const firstCustomer = users[1];
       const res = await chai
         .request(app)
-        .post(`/users/${firstCustomer.id}/login`)
-        .send({ username: firstCustomer.username, password: 'password' });
+        .post(`/users/login`)
+        .send({ email: firstCustomer.email, password: 'password' });
       res.should.have.status(200);
       res.body.should.have.property('user');
       res.body.user.should.be.an('object');
