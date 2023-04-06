@@ -8,6 +8,7 @@ const urlConnectionString = process.env.DATABASE_URL;
 const connectionString = urlConnectionString
   ? urlConnectionString
   : `postgres://postgres:postgres@${dbHost}:${dbPort}/${dbName}`;
+  
 const sequelize = new Sequelize(connectionString, {
   dialect: 'postgres',
   underscored: true,
