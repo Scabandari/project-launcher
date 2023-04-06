@@ -1,4 +1,7 @@
+import useProtectedPage from 'src/hooks/useProtectedPage';
+
 const HomePage = () => {
+  useProtectedPage();
   return (
     <div data-testid='home-page'>
       <h1>Home Page</h1>

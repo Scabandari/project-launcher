@@ -1,12 +1,10 @@
-import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Toaster from 'src/components/utils/Toaster';
 
-import { HomePage, AboutPage } from './pages';
+import { HomePage, AboutPage, LoginPage, RegisterPage } from './pages';
 import { Header } from './components';
 import { borderBox, fitPageContentMediaQuery } from './styles/constants';
-
-const url = process.env.REACT_APP_API_URL;
 
 const Help = () => <h1>Help Center</h1>;
 const Logout = () => <h1>You've been logged out</h1>;
@@ -34,10 +32,13 @@ const App = () => {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/about' element={<AboutPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisterPage />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/help' element={<Help />} />
           </Routes>
         </PageContent>
+        <Toaster />
       </PageWrap>
     </BrowserRouter>
   );

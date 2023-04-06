@@ -13,6 +13,8 @@ import {
   smallDeviceSize,
 } from '../../styles/constants';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from 'src/store/actions/userActions';
 
 const NavBackground = styled.div`
   width: 100vw;
@@ -49,6 +51,7 @@ const RightButtonGroup = styled.div`
 
 const Header = () => {
   const { width } = useWindowSize();
+  const dispatch = useDispatch();
 
   const renderRightButtonGroup = () => {
     if (width && width > smallDeviceSize) {
@@ -64,7 +67,7 @@ const Header = () => {
               <MdInfo style={{ marginLeft: '0.5rem' }} size='2rem' />
             </Icon>
           </Link>
-          <Link to='/logout'>
+          <Link onClick={() => dispatch(logout())} to='/login'>
             <Icon>
               <MdLogout style={{ marginLeft: '0.5rem' }} size='2rem' />
             </Icon>

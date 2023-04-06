@@ -2,7 +2,16 @@ const laptopSize = 889;
 const smallDeviceSize = 600;
 const primary = '#E7473C';
 const offWhite = '#F0F0F0';
-const secondary = '#841B15';
+const secondary = '#E77C3C';
+const secondaryHover = '#61C791';
+/** 
+ * Some other options for colors
+#61C791
+#3C92E7
+#E7C13C
+#9C3CE7
+#E77C3C
+*/
 
 const fitPageContentMediaQuery = `
   @media only screen and (min-width: ${laptopSize}px) {
@@ -22,6 +31,7 @@ export {
   primary,
   offWhite,
   secondary,
+  secondaryHover,
   fitPageContentMediaQuery,
   borderBox,
 };

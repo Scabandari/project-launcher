@@ -1,3 +1,4 @@
+import { ErrorBadRequest } from '../../utils/error';
 import UserModel from '../models/userModel';
 import { User } from '../types/userTypes';
 
@@ -10,14 +11,44 @@ const getById = async (id: number) => {
   return user;
 };
 
-const getByUsername = async (username: string) => {
-  const { password, ...user } = await UserModel.findOne({
-    where: {
-      username,
-    },
-  });
+const getByEmail = async (
+  email: string,
+  throwError = true
+): Promise<User | null> => {
+  try {
+    const { password, ...user } = await UserModel.findOne({
+      where: {
+        email,
+      },
+    });
 
-  return user;
+    return user;
+  } catch (err) {
+    if (throwError) {
+      throw new ErrorBadRequest('email', email, 'User not found');
+    }
+    return null;
+  }
+};
+
+const getByUsername = async (
+  username: string,
+  throwError = true
+): Promise<User | null> => {
+  try {
+    const { password, ...user } = await UserModel.findOne({
+      where: {
+        username,
+      },
+    });
+
+    return user;
+  } catch (err) {
+    if (throwError) {
+      throw new ErrorBadRequest('username', username, 'User not found');
+    }
+    return null;
+  }
 };
 
 const create = async (userToCreate: User) => {
@@ -66,6 +97,7 @@ export {
   getHashedPassword,
   getAll,
   getById,
+  getByEmail,
   getByUsername,
   create,
   update,

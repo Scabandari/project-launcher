@@ -1,6 +1,13 @@
 {
   "configurations": [
     {
+      "name": "Chrome launch",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "type": "chrome",
+      "webRoot": "${workspaceFolder}/client/react/src"
+    },
+    {
       "name": "API attach",
       "port": 9229,
       "request": "attach",
