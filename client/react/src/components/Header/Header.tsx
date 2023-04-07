@@ -62,6 +62,7 @@ const Header = () => {
               <MdHelpCenter size='2rem' />
             </Icon>
           </Link>
+
           <Link to='/about'>
             <Icon>
               <MdInfo style={{ marginLeft: '0.5rem' }} size='2rem' />
@@ -93,6 +94,7 @@ const Header = () => {
             <FaHome size='2rem' />
           </Icon>
         </Link>
+        <h3>{process.env.REACT_APP_API_URL}</h3>
         {renderRightButtonGroup()}
       </Nav>
     </NavBackground>
