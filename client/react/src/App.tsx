@@ -2,12 +2,24 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Toaster from 'src/components/utils/Toaster';
 
-import { HomePage, AboutPage, LoginPage, RegisterPage } from './pages';
+import {
+  // HomePage,
+  AboutPage,
+  LoginPage,
+  RegisterPage,
+} from './pages';
 import { Header } from './components';
 import { borderBox, fitPageContentMediaQuery } from './styles/constants';
 
 const Help = () => <h1>Help Center</h1>;
 const Logout = () => <h1>You've been logged out</h1>;
+
+const HomePage = () => (
+  <>
+    <h1>process.env: </h1>
+    <pre>{JSON.stringify(process.env, null, 2)}</pre>
+  </>
+);
 
 const PageWrap = styled.div`
   width: 100vw;
