@@ -94,7 +94,6 @@ const Header = () => {
             <FaHome size='2rem' />
           </Icon>
         </Link>
-        <h3>{process.env.REACT_APP_API_URL}</h3>
         {renderRightButtonGroup()}
       </Nav>
     </NavBackground>
