@@ -73,7 +73,7 @@ const update = async (req: Request, res: Response) => {
     const { id } = req.params;
     const parsedId = Number(id);
     const user = await serviceUsers.update(parsedId, req.body);
-    res.status(204).send({ user });
+    res.status(200).send({ user });
   } catch (err) {
     console.log('err', err);
   }
@@ -83,8 +83,8 @@ const remove = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const parsedId = Number(id);
-    const numberOfUsersDeleted = await serviceUsers.remove(parsedId);
-    res.status(200).send({ numberOfUsersDeleted });
+    await serviceUsers.remove(parsedId);
+    res.status(204).send();
   } catch (err) {
     console.log('err', err);
   }
