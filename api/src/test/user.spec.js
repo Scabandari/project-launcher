@@ -57,7 +57,7 @@ describe('user routes', async () => {
         .request(app)
         .post('/users/register')
         .send(newUser);
-      createUserRes.should.have.status(200);
+      createUserRes.should.have.status(201);
       createUserRes.body.should.have.property('user');
       createUserRes.body.user.should.be.an('object');
       const { id, userTypeId, username, email, password } =
@@ -74,9 +74,7 @@ describe('user routes', async () => {
       const deleteUserRes = await chai
         .request(app)
         .delete(`/users/${userToDelete.id}`);
-      deleteUserRes.should.have.status(200);
-      deleteUserRes.body.should.have.property('numberOfUsersDeleted');
-      deleteUserRes.body.numberOfUsersDeleted.should.be.equal(1);
+      deleteUserRes.should.have.status(204);
     });
   });
 
@@ -116,7 +114,7 @@ describe('user routes', async () => {
         .request(app)
         .post(`/users/login`)
         .send({ email: firstCustomer.email, password: 'password' });
-      res.should.have.status(200);
+      res.should.have.status(201);
       res.body.should.have.property('user');
       res.body.user.should.be.an('object');
       res.body.user.should.be.jsonEqual(firstCustomer);

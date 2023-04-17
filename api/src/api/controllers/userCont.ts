@@ -42,7 +42,7 @@ const getAll = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user = await serviceUsers.create(req.body);
-    res.status(200).send({ user });
+    res.status(201).send({ user });
   } catch (err) {
     console.log('err', err);
   }
@@ -62,7 +62,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 
     const userTypeId = await serviceUserTypes.getUserTypeId('customer');
     const user = await serviceUsers.create({ ...req.body, userTypeId });
-    res.status(200).send({ user });
+    res.status(201).send({ user });
   } catch (err) {
     next(err);
   }
@@ -83,8 +83,8 @@ const remove = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const parsedId = Number(id);
-    const numberOfUsersDeleted = await serviceUsers.remove(parsedId);
-    res.status(200).send({ numberOfUsersDeleted });
+    await serviceUsers.remove(parsedId);
+    res.status(204).send();
   } catch (err) {
     console.log('err', err);
   }
@@ -95,7 +95,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     const user = await serviceUsers.getByEmail(email);
     const token = await serviceUsers.login(user.username, password);
-    res.status(200).send({ user, token });
+    res.status(201).send({ user, token });
   } catch (err) {
     next(err);
     console.log('err', err);
@@ -106,7 +106,7 @@ const loginGuest = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = authUtils.createToken('guest');
     const user = serviceUsers.getGuestUser();
-    res.status(200).send({ user, token });
+    res.status(201).send({ user, token });
   } catch (err) {
     next(err);
     console.log('err', err);
