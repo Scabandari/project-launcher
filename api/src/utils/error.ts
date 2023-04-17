@@ -26,6 +26,30 @@ export class ErrorBase extends Error {
 
 export class ErrorBadRequest extends ErrorBase {
   constructor(property: string, values: any, message: string) {
-    super(400, property, values, message, true);
+    super(400, property, values, `BAD REQUEST: ${message}`, true);
+  }
+}
+
+export class ErrorUnauthorized extends ErrorBase {
+  constructor(property: string, values: any, message: string) {
+    super(401, property, values, `UNAUTHORIZED: ${message}`, true);
+  }
+}
+
+export class ErrorForbidden extends ErrorBase {
+  constructor(property: string, values: any, message: string) {
+    super(403, property, values, `FORBIDDEN: ${message}`, true);
+  }
+}
+
+export class ErrorNotFound extends ErrorBase {
+  constructor(property: string, values: any, message: string) {
+    super(404, property, values, `NOT FOUND: ${message}`, true);
+  }
+}
+
+export class ErrorConflict extends ErrorBase {
+  constructor(property: string, values: any, message: string) {
+    super(409, property, values, `CONFLICT: ${message}`, true);
   }
 }

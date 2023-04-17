@@ -82,7 +82,7 @@ function authReducer(state = initialState, action: AuthAction): AuthState {
     case AuthActionTypes.REGISTER_USER_REQUEST:
       return {
         ...state,
-        login: {
+        register: {
           loading: true,
           success: undefined,
         },

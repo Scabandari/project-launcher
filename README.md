@@ -6,7 +6,7 @@ Launch a full stack MERN application with:
 - Express
 - React + Redux + Sagas
 - Postgres
-- Prisma
+- Sequelize
 - Testing suite
   - Mocha for express
   - Cypress for react

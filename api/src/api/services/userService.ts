@@ -79,8 +79,6 @@ const login = async (username: string, password: string) => {
 const remove = async (userId: number) => {
   const numberOfUsersDeleted = await dbUsers.remove(userId);
   if (!numberOfUsersDeleted) throw 'User not removed';
-
-  return numberOfUsersDeleted;
 };
 
 export {
