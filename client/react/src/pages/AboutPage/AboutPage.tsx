@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import useProtectedPage from 'src/hooks/useProtectedPage';
 
 const StyledListItem = styled.li`
-  height: 2rem;
+  font-size: 16px;
 `;
 
 const Flex = styled.div`
@@ -12,6 +12,8 @@ const Flex = styled.div`
   svg {
     margin-left: 1rem;
     align-self: center;
+    min-width: 16px;
+    min-height: 16px;
   }
 `;
 
@@ -68,10 +70,10 @@ const AboutPage = () => {
       </p>
       <ul>
         {bulletPoints.map(({ phrase, checkMark }) => (
-          <StyledListItem>
+          <StyledListItem key={phrase}>
             <Flex>
               <p>{phrase}</p>
-              {checkMark && <FaCheck color='green' />}
+              {checkMark && <FaCheck color='green' size='16px' />}
             </Flex>
           </StyledListItem>
         ))}

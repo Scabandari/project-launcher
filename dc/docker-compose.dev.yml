@@ -32,7 +32,7 @@ services:
       - DB_NAME=db_dev
       - JWT_SECRET=${JWT_SECRET}
     restart: always
-    command: sh -c "./scripts/shell/wait-for-it.sh db:5432; npm run seed && npm run dev"
+    command: sh -c "./scripts/shell/wait-for-it.sh db:5432; npm run dev"
   client:
     build:
       context: ../client/react

@@ -7,7 +7,7 @@
     "test": "npm-run-all mocha",
     "mocha:debug": "mocha --inspect-brk -r ts-node/register src/test/*.spec.js --recursive --retries 1 --reporter spec --timeout 300000 --exit",
     "mocha": "mocha -r ts-node/register src/test/*.spec.js --full-trace --recursive --retries 1 --reporter spec --timeout 300000 --exit",
-    "dev": "npm-run-all nodemon",
+    "dev": "npm-run-all seed nodemon",
     "nodemon": "nodemon --exec node --inspect=0.0.0.0:9229 -r ts-node/register  src/index.ts",
     "start": "ts-node src/index.ts",
     "seed": "ts-node src/seed.ts",
