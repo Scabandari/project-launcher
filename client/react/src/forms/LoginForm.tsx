@@ -29,7 +29,14 @@ const StyledTextField = styled(TextField)`
 const StyledButton = styled(Button)`
   background-color: ${secondary};
   &:hover {
-    background-color: ${secondaryHover};
+    background-color: ${secondary};
+    opacity: 0.8;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
@@ -58,13 +65,13 @@ const LoginForm = () => {
         <FlexBetweenTitleRow>
           <h2>Login</h2>{' '}
           <AlignParagraphFlexStart>
-            <Link to='/register'>Register</Link> or{' '}
-            <Link
+            <StyledLink to='/register'>Register</StyledLink> or{' '}
+            <StyledLink
               onClick={() => dispatch(guestLogin({ navigate }))}
               to='/login'
             >
               Guest Login
-            </Link>
+            </StyledLink>
           </AlignParagraphFlexStart>
         </FlexBetweenTitleRow>
         <StyledTextField

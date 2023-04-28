@@ -9,7 +9,6 @@ const RegisterPage = () => {
   const token = useSelector((state: any) => state.users.token);
 
   useEffect(() => {
-    console.log('token: ', token);
     if (token) {
       navigate('/');
     }

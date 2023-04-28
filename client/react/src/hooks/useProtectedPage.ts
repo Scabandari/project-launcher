@@ -7,7 +7,6 @@ const useProtectedPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('token: ', token);
     if (!token) {
       navigate('/login');
     }

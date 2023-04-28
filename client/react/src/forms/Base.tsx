@@ -18,6 +18,9 @@ const StyledPaper = styled(Paper)`
   border: 1px solid #ccc;
   padding: 1rem;
   margin: 2rem;
+  @media only screen and (max-width: 600px) {
+    margin: 1rem 0rem 1rem 0rem;
+  }
 `;
 
 const Base = ({ children }: BaseProps) => (

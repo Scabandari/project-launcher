@@ -1,19 +1,19 @@
+import { Dispatch, SetStateAction } from 'react';
 import { FaHome } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 import { MdHelpCenter, MdInfo, MdLogout } from 'react-icons/md';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 
 import { useWindowSize } from '../../hooks';
 
 import {
   primary,
-  offWhite,
-  secondary,
   fitPageContentMediaQuery,
   smallDeviceSize,
 } from '../../styles/constants';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { logout } from 'src/store/actions/userActions';
 
 const NavBackground = styled.div`
@@ -33,24 +33,28 @@ const Nav = styled.div`
   background-color: ${primary};
   width: 100%;
   ${fitPageContentMediaQuery}
-  padding:;
 `;
 
 const Icon = styled.div`
-  color: ${offWhite};
+  color: black;
   padding: 5px;
   &:hover {
-    border: 2px solid ${secondary};
-    border-radius: 10px;
+    color: #333;
   }
 `;
 
 const RightButtonGroup = styled.div`
   display: flex;
+  margin-right: 0.5rem;
 `;
 
-const Header = () => {
+const Header = ({
+  setIsOpen,
+}: {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const { width } = useWindowSize();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const renderRightButtonGroup = () => {
@@ -80,7 +84,10 @@ const Header = () => {
     return (
       <RightButtonGroup>
         <Icon>
-          <GiHamburgerMenu size='2rem' />
+          <GiHamburgerMenu
+            onClick={() => setIsOpen((prevState) => !prevState)}
+            size='2rem'
+          />
         </Icon>
       </RightButtonGroup>
     );
@@ -90,11 +97,12 @@ const Header = () => {
     <NavBackground data-testid='header'>
       <Nav>
         <Link to='/'>
-          <Icon>
+          <Icon style={{ marginLeft: '0.5rem' }}>
             <FaHome size='2rem' />
           </Icon>
         </Link>
-        {renderRightButtonGroup()}
+        {!['/login', '/register'].includes(location.pathname) &&
+          renderRightButtonGroup()}
       </Nav>
     </NavBackground>
   );
